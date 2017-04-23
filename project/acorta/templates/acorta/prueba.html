@@ -1,0 +1,12 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'acorta/style.css' %}" />
+<!DOCTYPE html>
+<html>
+<title>Acortador</title>
+<h1>Lamentablemente, el recurso solicitado no se encuentra disponible.</h1>
+<h3>Sin embargo, no todo son malas noticias. Aquí tienes una lista de las URLs que han sido acortadas hasta la fecha</h3>
+<ul>
+    {% for element in larga_list %}
+        <li>{{element.larga}} y {{element.corta}}</li>
+    {% endfor %}
+<ul>
