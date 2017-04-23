@@ -112,6 +112,8 @@ def Start (request):
             respuesta +="<li>Volver a la página principal. Pincha <a href='%s'>%s</a></li>\r\n</ul>"
 
             return HttpResponse(respuesta %(URLCorta, URLCorta, str(URL), str(URL), prefix+domain+'/acorta', 'aqui.'))
+    else:
+        return HttpResponse('<h1> Metodo invalido</h1>')
 
 def NoMatch(request):
     template = loader.get_template('acorta/prueba.html')
