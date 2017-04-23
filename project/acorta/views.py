@@ -10,10 +10,11 @@ from django.template import loader
 formulario = "<form method= POST> Escribe tu URL: <input type='text' name='url'>"
 formulario += "<input type=submit value='Púlsame, por Dios' style='height:50px; width:125px'></form> "
 
+
 redireccion1 = ("<!DOCTYPE html>\r\n<html>\r\n<head>\r\n"+
                     "<meta http-equiv='Refresh' content='0;url=")
 redireccion2 = "'><body><h2>Redireccionandote...no te muevas!</h></body></html>"
-saludo = '<h1> Bienvenido al Acortador2.0</h1><h2>Ahora con Django!</h2>'
+saludo = 'Bienvenido al Acortador2.0'
 link = '<a ref='
 link2='</a>'
 # campo del formulario
@@ -47,11 +48,22 @@ def Start (request):
     domain = request.get_host() #domain = localhost:8080
     #Metodo usado en la peticion
     metodo = request.method
+    print(request.body)
     if metodo == 'GET':
         # Devolver el formulario junto a la lista de URLS acortadas hasta el momento
         respuesta = saludo+formulario
         respuesta += '<h2>Base de datos actual:</h2><ul>'
         list = URLModel.objects.all()
+        template = loader.get_template('acorta/prueba.html')
+        context = {
+            'intro': saludo,
+            'second_line':'Ahora con Django!',
+            'form': True,
+            'show_list': True,
+            'list_text':'Échale un vistazo a las URLs acortadas hasta el momento',
+            'larga_list': URLModel.objects.all(),
+        }
+        return HttpResponse(template.render(context, request))
         for element in list:
             larga = element.larga
             corta = element.corta
@@ -104,7 +116,10 @@ def Start (request):
 def NoMatch(request):
     template = loader.get_template('acorta/prueba.html')
     context = {
+        'intro': 'Lamentablemente el recurso solicitado no está disponible',
+        'list_text':'Sin embargo, no todo son malas noticias. Aquí tienes una lista de las URLs que han sido acortadas hasta la fecha',
         'larga_list': URLModel.objects.all(),
+        'show_list': True,
     }
     return HttpResponse(template.render(context, request))
 

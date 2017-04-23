@@ -26,7 +26,7 @@ p {
 	text-align: justify;
 	}
 h3 {
-	font: italic normal 1.4em sans-serif, georgia, sans-serif;
+	font: 1.4em , georgia, sans-serif;
 	letter-spacing: 1px;
 	margin-bottom: 0;
 	color: #7D775C;
@@ -183,7 +183,29 @@ footer a:link, footer a:visited {
 	color: #B3AE94;
 	}
 
+.form {
+        /* Sólo para centrar el formulario a la página */
+        margin: 0 auto;
+        width: 400px;
+        /* Para ver el borde del formulario */
+        padding: 1em;
+        border: 1px solid #CCC;
+        border-radius: 1em;
+    }
 
+input, textarea {
+    /* Para asegurarse de que todos los campos de texto tienen las mismas propiedades de fuente
+       Por defecto, las areas de texto tienen una fuente con monospace */
+    font: 1em sans-serif;
+
+    /* Para darle el mismo tamaño a todos los campos de texto */
+    width: 300px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    /* Para armonizar el look&feel del borde en los campos de texto */
+    border: 1px solid #999;
+}
 .extra1 {
 	background: transparent url(http://csszengarden.com/001/cr2.gif) top left no-repeat;
 	position: absolute;

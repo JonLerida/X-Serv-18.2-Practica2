@@ -3,10 +3,24 @@
 <!DOCTYPE html>
 <html>
 <title>Acortador</title>
-<h1>Lamentablemente, el recurso solicitado no se encuentra disponible.</h1>
-<h3>Sin embargo, no todo son malas noticias. Aquí tienes una lista de las URLs que han sido acortadas hasta la fecha</h3>
+<h1>{{intro}}</h1>
+<h3>{{second_line}}</h3>
+{%if form %}
+<br>
+<form action="" method="post">
+    <div>
+        <label url="Introduce una URL">Introduce una URL:</label>
+        <input type="text" id="url" />
+    <div class="button">
+        <button type="submit">Púlsame, por Dios</button>
+    </div>
+</form>
+{% endif %}
+{% if show_list %}
+<h3>{{list_text}}</h3>
 <ul>
     {% for element in larga_list %}
         <li>{{element.larga}} y {{element.corta}}</li>
     {% endfor %}
 <ul>
+{% endif %}
