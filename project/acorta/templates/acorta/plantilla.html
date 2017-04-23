@@ -1,0 +1,39 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'acorta/style.css' %}" />
+<!DOCTYPE html>
+<html>
+<title>Acortador</title>
+<h1>{{intro}}</h1>
+<h2>{{second_line}}</h2>
+<h3>{{third_line}}</h3>
+{% if noURL_error %}
+    <p>{{noURL_error_message}}<a href={{noURL_error_link}}><strong>aquí</a></p>
+{% endif %}
+{%if form %}
+<br>
+<form action="" method="POST">
+    <div>
+        <label url="Introduce una URL">Introduce una URL:</label>
+        <input type="text" name="url" />
+    <class="button">
+        <button type="submit">Púlsame, por Dios</button>
+    </div>
+</form>
+{% endif %}
+{% if show_list %}
+    <h3>{{list_text}}</h3>
+        <ul>
+        {% for element in larga_list %}
+            <li class="link">{{element.larga}} y {{element.corta}}</li>
+        {% endfor %}
+        </ul>
+{% endif %}
+{% if loop_message%}
+    <h5>{{loop_message}}</h5>
+    <ul>
+        <li>{{loop_message_option1}} <a href={{url_corta}}><strong>{{url_corta}}</strong></a></li>
+        <li>{{loop_message_option2}} <a href={{url_larga}}><strong>{{url_larga}}</strong></a></li>
+        <li>{{back_message}} <a href={{back_link}}><strong>aqui</strong></a></li>
+
+    </ul>
+{% endif%}

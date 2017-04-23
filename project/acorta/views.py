@@ -14,7 +14,7 @@ formulario += "<input type=submit value='Púlsame, por Dios' style='height:50px;
 redireccion1 = ("<!DOCTYPE html>\r\n<html>\r\n<head>\r\n"+
                     "<meta http-equiv='Refresh' content='0;url=")
 redireccion2 = "'><body><h2>Redireccionandote...no te muevas!</h></body></html>"
-saludo = 'Bienvenido al Acortador2.0'
+saludo = 'Bienvenido al Acortador 2.0'
 link = '<a ref='
 link2='</a>'
 # campo del formulario
@@ -54,7 +54,7 @@ def Start (request):
         respuesta = saludo+formulario
         respuesta += '<h2>Base de datos actual:</h2><ul>'
         list = URLModel.objects.all()
-        template = loader.get_template('acorta/prueba.html')
+        template = loader.get_template('acorta/plantilla.html')
         context = {
             'intro': saludo,
             'second_line':'Ahora con Django!',
@@ -83,15 +83,24 @@ def Start (request):
 
         if URL == prefix:
             # Si no hay qs, mando mensaje de error y enlace a la pagina original
-            respuesta = '<h1>400 Bad Request</h1>'
-            respuesta += '<h2>Introduce una URL en el recuadrito, gracioso</h2>'
-            respuesta += "<p>Para volver a la página principal haz click <a href="+prefix+domain+'/acorta'+">aquí</a></p>"
-            return HttpResponse(respuesta)
+            template = loader.get_template('acorta/plantilla.html')
+            context = {
+                'intro': '400 Bad Request',
+                'second_line': 'Intruduce una URL en el recuadrito, gracioso',
+                'noURL_error': True,
+                'noURL_error_message': 'Para volver a la página principal haz click ',
+                'noURL_error_link': prefix+domain+'/acorta',
+            }
+            return HttpResponse(template.render(context, request))
         else:
             # Si hay URL, compruebo si la tengo guardada ya y elaboro la respesta
             try:
+                context={
+                    'intro': 'Acortamiento realizado con éxito',
+                    'third_line': 'La url se encontraba en la base de datos',
+                }
+                template = loader.get_template('acorta/plantilla.html')
                 URLCorta = URLModel.objects.get(larga=URL).corta
-                print(URLCorta)
                 respuesta = '<h1>Acortamiento realizado con éxito</h1>'
                 respuesta +='<h2>La url se encontraba en la base de datos</h2>'
             except URLModel.DoesNotExist:
@@ -99,24 +108,28 @@ def Start (request):
                 #Localiza el siguiente índice de URL corta
                 index = URLModel.Search_Last_Index(URLModel, domain)
                 URLCorta = prefix+ domain+'/acorta/'+str(index)
-                print(URLCorta)
-                print(URL)
                 new = URLModel(larga= URL, corta = URLCorta)
                 new.save()
-                respuesta = '<h1>Acortamiento realizado con éxito</h1>'
-                respuesta += '<h2>La url recibida no estaba en la base de datos</h2>'
+                context.update({
+                    'third_line': 'La url no estaba en la base de datos',
+                })
+            #elaboramos la respuesta
+            context.update({
+                'loop_message':'¿Qué mas quieres de mi?',
+                'loop_message_option1':'Visitar url corta: ',
+                'url_corta': URLCorta,
+                'url_larga': str(URL),
+                'loop_message_option2':'Visitar url larga: ',
+                'back_message': 'Volver a la página principal. Pincha',
+                'back_link': prefix+domain+'/acorta',
+                })
 
-            respuesta += "<p>¿Qué más quieres de mi?</p>\r\n<ul>"
-            respuesta += "<li>Visitar url corta: <a href='%s'>%s</a></li>\r\n"
-            respuesta += "<li>Visitar url larga: <a href='%s'>%s</a></li>\r\n"
-            respuesta +="<li>Volver a la página principal. Pincha <a href='%s'>%s</a></li>\r\n</ul>"
-
-            return HttpResponse(respuesta %(URLCorta, URLCorta, str(URL), str(URL), prefix+domain+'/acorta', 'aqui.'))
+            return HttpResponse(template.render(context, request))
     else:
         return HttpResponse('<h1> Metodo invalido</h1>')
 
 def NoMatch(request):
-    template = loader.get_template('acorta/prueba.html')
+    template = loader.get_template('acorta/plantilla.html')
     context = {
         'intro': 'Lamentablemente el recurso solicitado no está disponible',
         'list_text':'Sin embargo, no todo son malas noticias. Aquí tienes una lista de las URLs que han sido acortadas hasta la fecha',

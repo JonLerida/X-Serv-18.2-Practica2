@@ -10,13 +10,13 @@
 
 /* basic elements */
 html {
-	margin: 0;
+	margin: 20;
 	padding: 0;
 	}
 body {
 	font: 75% sans-serif, georgia, sans-serif;
 	line-height: 1.88889;
-	color: #555753;
+	color: #00000;
 	background: #fff url(http://csszengarden.com/001/blossoms.jpg) no-repeat bottom right;
 	margin: 0;
 	padding: 0;
@@ -25,12 +25,26 @@ p {
 	margin-top: 0;
 	text-align: justify;
 	}
+
 h3 {
-	font: 1.4em , georgia, sans-serif;
-	letter-spacing: 1px;
+	font: 1.4em sans-serif;
 	margin-bottom: 0;
 	color: #7D775C;
 	}
+
+
+h1, h2, h3, h4 {
+    color:  #15761B;
+    font-weight: normal;
+    letter-spacing: 20 px
+    font-family: sans-serif;
+    }
+h1 { font-size: 5em; }
+h2 { font-size: 3em; }
+h3 { font-size: 2.4em; }
+h5 { font-size: 2em;
+     color: #00000;
+     text-indent: 3%;}
 a:link {
 	font-weight: bold;
 	text-decoration: none;
@@ -204,7 +218,7 @@ input, textarea {
     box-sizing: border-box;
 
     /* Para armonizar el look&feel del borde en los campos de texto */
-    border: 1px solid #999;
+    border: 1px solid #00000;
 }
 .extra1 {
 	background: transparent url(http://csszengarden.com/001/cr2.gif) top left no-repeat;
