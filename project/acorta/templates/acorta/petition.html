@@ -1,0 +1,11 @@
+<!--Plantilla muy simple para elaborar la respuesta cuando un cliente pide http://localhost:8080/acorta/[numero]
+    Devolvemos un mensaje de error en caso de no estar encontrada.-->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'acorta/style.css' %}" />
+<!DOCTYPE html>
+<html>
+<title>Acortador</title>
+<h1>{{intro}}</h1>
+<h2>{{second_msg}}</h2>
+<h3>{{info}}</h3>
+<p>{{back_message}}<a href={{back_link}}><strong> aquí</strong></a></p>
