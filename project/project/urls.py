@@ -16,6 +16,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    # Llamamos a la app con localhost:8080/acorta/...
     url(r'^acorta/', include('acorta.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
